@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div align="center"><h3><p>客户端-服务端交互</p></h3></div>
+    <div align="center">请输入用户名：<input type="text" id="author" value=""></div>
+    <div align="center"><input type="button" value="建立连接" onclick="websocketTest()" style="color: blue"></div>
+    <div align="center"><input type="text" id="message"><input type="button" value="发送消息" onclick="send()"></div>
+    <div align="center"><input type="button" value="关闭连接" onclick="websocketClose()" style="color: red"></div>
+    <script>
+        var ws = null;
+
+        function websocketTest() {
+            var name = document.getElementById("author").value;
+            //判断浏览器是否支持websocket
+            if("WebSocket" in window){
+                alert("你的浏览器支持websocket！");
+                ws = new WebSocket("ws://localhost:8080/websocket/"+name);
+
+                //连接时执行
+                ws.onopen = function () {
+                    alert("建立连接成功");
+                };
+
+                //接受到消息时执行
+                ws.onmessage = function (ev) {
+                    var message = ev.data;
+                    console.log(message);
+                    alert("数据已接收");
+                };
+
+                //发送异常时执行
+                ws.onerror = function () {
+                    console.log("连接发生错误");
+                };
+
+                //连接断开时执行
+                ws.onclose = function () {
+                    alert("关闭连接");
+                }
+            }else {
+                alert("你的浏览器不支持websocket！");
+            }
+        }
+
+        //关闭连接
+        function websocketClose() {
+            ws.close();
+        }
+
+        //发送消息
+        function send() {
+            var message = document.getElementById("message").value;
+            ws.send(message);
+        }
+    </script>
+</body>
+</html>

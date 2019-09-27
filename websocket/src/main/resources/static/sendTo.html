@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div align="center"><h3><p>客户端-客户端交互，点对点单聊</p></h3></div>
+    <div align="center">请输入用户名：<input type="text" id="name"></div>
+    <div align="center"><input type="button" value="建立连接" onclick="buildWebSocket()" style="color: blue"></div>
+    <div align="center">发送给：<input type="text" id="send-to"></div>
+    <div align="center">消息：<input type="text" id="message"></div>
+    <div align="center"><input type="button" value="发送" onclick="sendMessage()"></div>
+    <div align="center"><input type="button" value="断开连接" onclick="closeWebSocket()" style="color: red"></div>
+    <script>
+        var ws = null;
+        function buildWebSocket() {
+            var name = document.getElementById("name").value;
+            if("WebSocket" in window){
+                alert("你的浏览器支持WebSocket");
+                ws = new WebSocket("ws://localhost:8080/websocket/"+name);
+
+                ws.onopen = function () {
+                    alert("建立连接成功");
+                };
+
+                ws.onmessage = function (ev) {
+                    console.log(ev.data);
+                    alert("数据已接收");
+                };
+
+                ws.onclose = function (ev) {
+                    alert("连接已断开");
+                };
+
+                ws.onerror = function (ev) {
+                    alert("连接发生异常");
+                }
+
+            }else {
+                alert("你的浏览器版本太低，不支持WebSocket");
+            }
+        }
+
+        function sendMessage() {
+            var sendTo = document.getElementById("send-to").value;
+            var message = document.getElementById("message").value;
+            var fromSendTo = {sendTo:sendTo,message:message};
+            ws.send(JSON.stringify(fromSendTo));
+        }
+
+        function closeWebSocket() {
+            ws.close();
+        }
+    </script>
+</body>
+</html>

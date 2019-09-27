@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div align="center"><h3>发送方返回消息给所有订阅方 -（群发）</h3></div>
+    <div align="center"><input type="button" value="建立连接" onclick="connect()"></div>
+    <div align="center"><input type="text" id="message"><input type="button" value="发送消息" onclick="sendName()"></div>
+    <div align="center"><input type="button" value="关闭连接" onclick="disdconnect()"></div>
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+    <script>
+        var stompClient = null;
+
+        //建立连接
+        function connect() {
+            //指定服务端连接地址
+            var socket = new SockJS("http://localhost:8080/ws/endpoint");
+            //获取stomp子协议的websocket客户端对象
+            stompClient = Stomp.over(socket);
+            //建立连接
+            stompClient.connect({},function (frame) {
+                console.log("Connected："+frame);
+                //订阅(广播地址)
+                stompClient.subscribe("/topic/greetings",function (greeting) {
+                    // console.log(greeting);
+                    //服务端返回的消息
+                    console.log(greeting.body);
+                });
+            })
+        }
+
+        //关闭连接
+        function disdconnect() {
+            stompClient.disconnect();
+            console.log("关闭连接");
+        }
+
+        //发送消息
+        function sendName() {
+            //              发送者地址           消息
+            // stompClient.send("/app/hello",{},$("#message").val());
+            stompClient.send("/app/hello1",{},$("#message").val());
+        }
+
+    </script>
+</body>
+</html>

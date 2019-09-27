@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="condition" />
+        <module name="jpa" />
+        <module name="mail" />
+        <module name="mybatis" />
+        <module name="rabbitmq" />
+        <module name="redis" />
+        <module name="scheduled" />
+        <module name="stomp" />
+        <module name="web" />
+        <module name="websocket" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="condition" target="1.8" />
+      <module name="jpa" target="1.8" />
+      <module name="mail" target="1.8" />
+      <module name="mybatis" target="1.8" />
+      <module name="rabbitmq" target="1.8" />
+      <module name="redis" target="1.8" />
+      <module name="scheduled" target="1.8" />
+      <module name="springboot-demo" target="1.8" />
+      <module name="stomp" target="1.8" />
+      <module name="web" target="1.8" />
+      <module name="websocket" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="condition" options="-parameters" />
+      <module name="jpa" options="-parameters" />
+      <module name="mail" options="-parameters" />
+      <module name="mybatis" options="-parameters" />
+      <module name="rabbitmq" options="-parameters" />
+      <module name="redis" options="-parameters" />
+      <module name="scheduled" options="-parameters" />
+      <module name="springboot-demo" options="-parameters" />
+      <module name="stomp" options="-parameters" />
+      <module name="web" options="-parameters" />
+      <module name="websocket" options="-parameters" />
+    </option>
+  </component>
+</project>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div align="center"><h3>发送方返回消息给特定订阅方 -（单聊）</h3></div>
+    <div align="center">请输入用户名：<input type="text" id="name"></div>
+    <div align="center"><input type="button" value="建立连接"onclick="connect()"></div>
+    <div align="center">接收信息的人：<input type="text" id="send-to"></div>
+    <div align="center"><input type="text" id="message"><input type="button" value="发送消息" onclick="sendMessage()"></div>
+    <div align="center"><input type="button" value="断开连接" onclick="closeConnect()"></div>
+
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <script>
+        var stompClient = null;
+
+        //建立连接
+        function connect() {
+            var socket = new SockJS("http://localhost:8080/ws/endpoint");
+            stompClient = Stomp.over(socket);
+            stompClient.connect({},function (frame) {
+                stompClient.subscribe("/user/queue/aloneResponse",function (response) {
+                    console.log("接收到的信息："+response.body);
+                });
+            })
+        }
+
+        //发送消息
+        function sendMessage() {
+            var sendFrom = $("#name").val();
+            var sendTo = $("#send-to").val();
+            var message = $("#message").val();
+            var data = {sendFrom:sendFrom, sendTo:sendTo, message:message};
+            stompClient.send("/app/sendTo",{},JSON.stringify(data));
+        }
+
+        //关闭连接
+        function closeConnect() {
+            stompClient.disconnect();
+            console.log("连接关闭");
+        }
+    </script>
+</body>
+</html>

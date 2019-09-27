@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>邮件发送模板</title>
+</head>
+<body>
+    <p>Hello , Welcome to Here ! </p>
+    <table>
+        <tr>
+            <td>姓名：</td>
+            <td th:text="${username}"></td>
+        </tr>
+        <tr>
+            <td>身高：</td>
+            <td th:text="${taller}"></td>
+        </tr>
+        <tr>
+            <td>体重：</td>
+            <td th:text="${weight}"></td>
+        </tr>
+    </table>
+    <div style="color: aqua">This is Why We do it</div>
+</body>
+</html>
