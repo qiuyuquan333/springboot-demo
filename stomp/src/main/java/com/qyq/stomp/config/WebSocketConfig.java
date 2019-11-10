@@ -31,4 +31,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         //设定发送方地址前缀
         registry.setApplicationDestinationPrefixes("/app");
     }
+
 }

@@ -6,7 +6,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.security.Principal;
 
 @Controller
 public class StompController {
@@ -41,12 +42,18 @@ public class StompController {
 
 
     /**
-     * 点对点单聊。。。。。。。。没成功，另外一方接收不到消息，（无法指定己方标识），后续解决
+     * 点对点单聊。。。。。。。。需要使用security拦截确定用户身份。
      * @param sendTo
      */
     @MessageMapping("/sendTo")
-    public void messageSendTo(@RequestBody MessageSendTo sendTo){
+    public void messageSendTo(MessageSendTo sendTo,Principal principal){
         System.out.println(sendTo.toString());
+        System.out.println("Principal："+principal);
+        /**
+         * 第一个参数：消息接收方
+         * 第二个参数：订阅地址
+         * 第三个参数：消息
+         */
         messagingTemplate.convertAndSendToUser(sendTo.getSendTo(),"/queue/aloneResponse",sendTo.getMessage());
     }
 

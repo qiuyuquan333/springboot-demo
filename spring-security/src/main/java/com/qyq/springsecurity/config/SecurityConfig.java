@@ -13,9 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity  //开启网络安全支持
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    VerifyFilter verifyFilter;
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //配置两个用户（用户名、角色、密码）
